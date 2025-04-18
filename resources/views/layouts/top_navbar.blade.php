@@ -18,6 +18,45 @@ $currentRoute = request()->route()->getName();
                         <a class="nav-link" href="{{route('home')}}">
                             Dashboard
                         </a>
+                    </li><li class="dropdown <?php echo $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">
+                        <a href="#" class="nav-link dropdown-toggle">Product</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link" href="{{route('product_banner')}}">
+                                    Product Banner
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('category.index')}}">
+                                    Category
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('product.index')}}">
+                                    Product
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown <?php echo $currentRoute == 'shop_banner'|| $currentRoute == 'shop_item.index' ||$currentRoute == 'order.index'  ? 'active' : '' ?>">
+                        <a href="#" class="nav-link dropdown-toggle">Shop</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link" href="{{route('shop_banner')}}">
+                                    Shop Banner
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('shop_item.index')}}">
+                                    Shop Item
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('order.index')}}">
+                                    Order
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="dropdown <?php echo $currentRoute == 'user.index' ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">User</a>
@@ -29,9 +68,14 @@ $currentRoute = request()->route()->getName();
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown <?php echo $currentRoute == 'staff.index' || $currentRoute == 'bank.index' ? 'active' : '' ?>">
+                    <li class="dropdown <?php echo $currentRoute == 'home_banner' || $currentRoute == 'staff.index' || $currentRoute == 'bank.index' ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">Setup</a>
                         <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link" href="{{route('home_banner')}}">
+                                    Home Banner
+                                </a>
+                            </li>
                             <li>
                                 <a class="nav-link" href="{{route('staff.index')}}">
                                     Staff

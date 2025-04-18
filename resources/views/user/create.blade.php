@@ -44,8 +44,8 @@
                         <div class="mb-3">
                             <label class="col-form-label">Status <span style="color:red">*</span></label>
                             <select class="form-control" name="is_active">
-                                <option value=1>Active</option>
-                                <option value=0>Inactive</option>
+                                <option value=1 <?php echo $user->is_active == 1?'selected':'' ?>>Active</option>
+                                <option value=0 <?php echo $user->is_active == 0?'selected':'' ?>>Inactive</option>
                             </select>
                         </div>
                         @endif

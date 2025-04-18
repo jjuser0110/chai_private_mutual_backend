@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Package;
 use App\Models\PackageInvoice;
 use App\Models\BankAccount;
+use App\Models\FileAttachment;
 use App\Models\DailyReport;
 use Bouncer;
 use Illuminate\Support\Facades\Validator;
@@ -35,6 +36,81 @@ class HomeController extends Controller
     public function index(Request $request)
     {
         return view('home');
+    }
+
+    public function image_destroy(FileAttachment $banner)
+    {
+        $banner->delete();
+        return redirect()->back();
+    }
+
+    public function home_banner(Request $request)
+    {
+        $home_banners = FileAttachment::where('content_id',0)->where('content_type','HomeBanner')->get();
+        return view('home_banner')->with('home_banners',$home_banners);
+    }
+
+    public function home_banner_store(Request $request)
+    {
+        // dd($request->all());
+        if(isset($request->file_attachment)){
+            $upload = $this->upload($request->file_attachment, 'home_banner',0);
+            FileAttachment::create([
+                'content_id'=>0,
+                'content_type'=>'HomeBanner',
+                'file_path'=>$upload['file_path'],
+                'file_name'=>$upload['file_name'],
+                'file_type'=>$upload['file_type'],
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function shop_banner(Request $request)
+    {
+        $shop_banners = FileAttachment::where('content_id',0)->where('content_type','ShopBanner')->get();
+        return view('shop_banner')->with('shop_banners',$shop_banners);
+    }
+
+    public function shop_banner_store(Request $request)
+    {
+        // dd($request->all());
+        if(isset($request->file_attachment)){
+            $upload = $this->upload($request->file_attachment, 'shop_banner',0);
+            FileAttachment::create([
+                'content_id'=>0,
+                'content_type'=>'ShopBanner',
+                'file_path'=>$upload['file_path'],
+                'file_name'=>$upload['file_name'],
+                'file_type'=>$upload['file_type'],
+            ]);
+        }
+
+        return redirect()->back();
+    }
+
+    public function product_banner(Request $request)
+    {
+        $product_banners = FileAttachment::where('content_id',0)->where('content_type','ProductBanner')->get();
+        return view('product_banner')->with('product_banners',$product_banners);
+    }
+
+    public function product_banner_store(Request $request)
+    {
+        // dd($request->all());
+        if(isset($request->file_attachment)){
+            $upload = $this->upload($request->file_attachment, 'product_banner',0);
+            FileAttachment::create([
+                'content_id'=>0,
+                'content_type'=>'ProductBanner',
+                'file_path'=>$upload['file_path'],
+                'file_name'=>$upload['file_name'],
+                'file_type'=>$upload['file_type'],
+            ]);
+        }
+
+        return redirect()->back();
     }
 
     public function change_password(Request $request){
