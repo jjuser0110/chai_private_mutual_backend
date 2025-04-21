@@ -41,6 +41,7 @@ class User extends Authenticatable
         'credit_score',
         'shop_point',
         'account_health',
+        'fund_password',
     ];
 
     /**
@@ -75,5 +76,10 @@ class User extends Authenticatable
     public function user_addresses()
     {
         return $this->hasMany('App\Models\UserAddress');
+    }
+
+    public function upline_detail()
+    {
+        return $this->belongsTo('App\Models\User','upline');
     }
 }

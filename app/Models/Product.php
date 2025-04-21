@@ -23,11 +23,12 @@ class Product extends Model
         'investment_amount',
         'project_rules',
         'is_active',
+        'display',
     ];
 
-    public function product_category()
+    public function category()
     {
-        return $this->belongsTo('App\Models\ProductCategory');
+        return $this->belongsTo('App\Models\ProductCategory','product_category_id');
     }
 
 	public function last_file()

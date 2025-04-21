@@ -16,48 +16,83 @@
                     @csrf
                     <div class="card-body">
                         <h6>User Information</h6>
-                        <div class="mb-3">
-                            <label class="col-form-label">Name <span style="color:red">*</span></label>
-                            <input class="form-control" type="text" name="name" placeholder="name..." value="{{$user->name??''}}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Email</label>
-                            <input class="form-control" type="email" name="email" placeholder="email.." value="{{$user->email??''}}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">ID Card <span style="color:red">*</span></label>
-                            <input class="form-control" type="text" name="id_card" placeholder="id_card.." value="{{$user->id_card??''}}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Contact No <span style="color:red">*</span></label>
-                            <input class="form-control" type="text" name="contact_no" placeholder="contact no.." value="{{$user->contact_no??''}}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Username <span style="color:red">*</span></label>
-                            <input class="form-control" type="text" name="username" placeholder="username.." value="{{$user->username??''}}" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Password</label>
-                            <input class="form-control" type="text" name="password" placeholder="password.." value="{{$user->password??''}}" required>
-                        </div>
                         @if(isset($user))
-                        <div class="mb-3">
-                            <label class="col-form-label">Status <span style="color:red">*</span></label>
-                            <select class="form-control" name="is_active">
-                                <option value=1 <?php echo $user->is_active == 1?'selected':'' ?>>Active</option>
-                                <option value=0 <?php echo $user->is_active == 0?'selected':'' ?>>Inactive</option>
-                            </select>
-                        </div>
+                        <p>
+                            Available Fund : {{$user->available_fund??''}}<br>
+                            Invitation Code : {{$user->invitation_code??''}}<br>
+                            Upline : {{$user->upline_detail->username??''}}
+                        </p>
                         @endif
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <div class="mb-3">
+                                    <label class="col-form-label">Name <span style="color:red">*</span></label>
+                                    <input class="form-control" type="text" name="name" placeholder="name..." value="{{$user->name??''}}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Email</label>
+                                    <input class="form-control" type="email" name="email" placeholder="email.." value="{{$user->email??''}}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">ID Card <span style="color:red">*</span></label>
+                                    <input class="form-control" type="text" name="id_card" placeholder="id_card.." value="{{$user->id_card??''}}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Contact No <span style="color:red">*</span></label>
+                                    <input class="form-control" type="text" name="contact_no" placeholder="contact no.." value="{{$user->contact_no??''}}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Username <span style="color:red">*</span></label>
+                                    <input class="form-control" type="text" name="username" placeholder="username.." value="{{$user->username??''}}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Password</label>
+                                    <input class="form-control" type="text" name="password" placeholder="password.." @if(!isset($user)) required @endif>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mb-3">
+                                <div class="mb-3">
+                                    <label class="col-form-label">User Level</label>
+                                    <select class="form-control" name="medal">
+                                        <option value='Ordinary' <?php echo isset($product)&&$product->medal == 'Ordinary'?'selected':'' ?>>Ordinary</option>
+                                        <option value='Silver' <?php echo isset($product)&&$product->medal == 'Silver'?'selected':'' ?>>Silver</option>
+                                        <option value='Gold' <?php echo isset($product)&&$product->medal == 'Gold'?'selected':'' ?>>Gold</option>
+                                        <option value='Diamond' <?php echo isset($product)&&$product->medal == 'Diamond'?'selected':'' ?>>Diamond</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Unavailable Fund</label>
+                                    <input class="form-control" type="number" min="0" step="0.01" name="unavailable_fund" placeholder="unavailable_fund.." value="{{$user->unavailable_fund??''}}" >
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Income</label>
+                                    <input class="form-control" type="number" min="0" step="0.01" name="income" placeholder="income.." value="{{$user->income??''}}" >
+                                </div>
+                                <div class="mb-3">
+                                    <label class="col-form-label">Fund Password (6 digit)</label>
+                                    <input class="form-control" type="text" name="fund_password" placeholder="fund_password.." value="{{$user->fund_password??''}}" >
+                                </div>
+                                @if(isset($user))
+                                <div class="mb-3">
+                                    <label class="col-form-label">Status <span style="color:red">*</span></label>
+                                    <select class="form-control" name="is_active">
+                                        <option value=1 <?php echo $user->is_active == 1?'selected':'' ?>>Active</option>
+                                        <option value=0 <?php echo $user->is_active == 0?'selected':'' ?>>Inactive</option>
+                                    </select>
+                                </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer text-end">
                         <a href="{{route('user.index')}}" class="btn btn-secondary">Back</a>
-                        <button type="submit" class="btn btn-primary" onclick="showLoading()">Submit</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                         <!-- <button class="btn btn-secondary">Cancel</button> -->
                     </div>
                 </form>
             </section>
         </div>
+        @if(isset($user))
         <div class="col-lg-6 mb-3">
             <section class="card">
                 <div class="card-header" >
@@ -128,6 +163,7 @@
                 </div>
             </section>
         </div>
+        @endif
     </div>
 </div>
     <!-- end: page -->

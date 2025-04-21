@@ -66,6 +66,11 @@ $currentRoute = request()->route()->getName();
                                     User List
                                 </a>
                             </li>
+                            <li>
+                                <a class="nav-link" href="{{route('withdraw.index')}}">
+                                    Withdraw
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class="dropdown <?php echo $currentRoute == 'home_banner' || $currentRoute == 'staff.index' || $currentRoute == 'bank.index' ? 'active' : '' ?>">
