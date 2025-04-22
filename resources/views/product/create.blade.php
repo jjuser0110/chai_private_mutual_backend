@@ -42,15 +42,27 @@
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Earning Yield</label>
-                            <input class="form-control" type="text" name="earning_yield" placeholder="earning yield" value="{{$product->earning_yield??''}}">
+                            <input class="form-control" type="number" min="0" step="0.01" name="earning_yield" placeholder="earning yield" value="{{$product->earning_yield??''}}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label">Earning Yield Unit</label>
+                            <input class="form-control" type="text" name="earning_yield_unit" placeholder="earning yield unit" value="{{$product->earning_yield_unit??''}}">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Deadline</label>
-                            <input class="form-control" type="text" name="project_deadline" placeholder="project deadline" value="{{$product->project_deadline??''}}">
+                            <input class="form-control" type="number" min="0" step="1" name="project_deadline" placeholder="project deadline" value="{{$product->project_deadline??''}}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label">Deadline Unit (days/hours)</label>
+                            <input class="form-control" type="text" name="project_deadline_unit" placeholder="project deadline" value="{{$product->project_deadline_unit??''}}">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Investment Amount</label>
                             <input class="form-control" type="number" min="0" step="0.01" name="investment_amount" placeholder="investment amount" value="{{$product->investment_amount??''}}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="col-form-label">Investment Amount To</label>
+                            <input class="form-control" type="number" min="0" step="0.01" name="investment_amount_to" placeholder="investment amount to" value="{{$product->investment_amount_to??''}}">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">User Level <span style="color:red">*</span></label>

@@ -18,4 +18,7 @@ Route::prefix('/user')->as('user.')->middleware(['auth'])->group(function() {
     Route::post('/store_address/{user}', 'UserController@store_address')->name('store_address');
     Route::get('/edit_address/{user_address}', 'UserController@edit_address')->name('edit_address');
     Route::post('/update_address/{user_address}', 'UserController@update_address')->name('update_address');
+    Route::get('/create_score/{user}', 'UserController@create_score')->name('create_score');
+    Route::post('/store_score/{user}', 'UserController@store_score')->name('store_score');
+    Route::post('/deposit', 'UserController@deposit')->name('deposit');
 });

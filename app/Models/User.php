@@ -82,4 +82,14 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Models\User','upline');
     }
+
+    public function user_scores()
+    {
+        return $this->hasMany('App\Models\UserScore')->orderBy('created_at','DESC');
+    }
+
+    public function money_records()
+    {
+        return $this->hasMany('App\Models\MoneyRecord')->orderBy('created_at','DESC');
+    }
 }

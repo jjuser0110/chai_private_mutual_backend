@@ -21,9 +21,12 @@ class Product extends Model
         'project_deadline',
         'user_level',
         'investment_amount',
+        'investment_amount_to',
         'project_rules',
         'is_active',
         'display',
+        'earning_yield_unit',
+        'project_deadline_unit',
     ];
 
     public function category()

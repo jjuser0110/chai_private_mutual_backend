@@ -9,7 +9,14 @@
     @include('layouts.flash-message')
 
     <!-- start: page -->
+    @if(isset($user))
     <div class="row">
+        <div class="col-lg-12">
+            <a class="btn btn-secondary" style="float:right" onclick="openDepoModal()">Deposit</a>
+        </div>
+    </div>
+    @endif
+    <div class="row" style="padding-top:10px">
         <div class="col-lg-6 mb-3">
             <section class="card">
                 <form class="theme-form mega-form" enctype="multipart/form-data" @if (isset($user)) method="post" action="{{ route('user.update',$user) }}" @else method="post" action="{{ route('user.store') }}" @endif>
@@ -63,7 +70,7 @@
                                 <div class="mb-3">
                                     <label class="col-form-label">Unavailable Fund</label>
                                     <input class="form-control" type="number" min="0" step="0.01" name="unavailable_fund" placeholder="unavailable_fund.." value="{{$user->unavailable_fund??''}}" >
-                                </div>
+                                </div>  
                                 <div class="mb-3">
                                     <label class="col-form-label">Income</label>
                                     <input class="form-control" type="number" min="0" step="0.01" name="income" placeholder="income.." value="{{$user->income??''}}" >
@@ -162,10 +169,104 @@
                     </table>
                 </div>
             </section>
+            <section class="card">
+                <div class="card-header" >
+                    <h4>User Score</h4>
+                    <a class="btn btn-xs btn-square btn-primary" style="float: right;" href="{{route('user.create_score',$user)}}">Create</a>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                        <thead>
+                            <tr>
+                                <th>Created At</th>
+                                <th>Score</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($user->user_scores as $row=>$score)
+                                <tr>
+                                    <td>{{$score->created_at??''}}</td>
+                                    <td>{{$score->score??''}}</td>
+                                    <td>{{$score->value??''}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <section class="card">
+                    <div class="card-header" >
+                        <h4>Money Record</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                            <thead>
+                                <tr>
+                                    <th>Created At</th>
+                                    <th>Type</th>
+                                    <th>Before</th>
+                                    <th>Amount</th>
+                                    <th>After</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($user->money_records as $record)
+                                    <tr>
+                                        <td>{{$record->created_at??''}}</td>
+                                        <td>{{$record->type??''}}</td>
+                                        <td>{{$record->before_amount??''}}</td>
+                                        <td>{{$record->amount??''}}</td>
+                                        <td>{{$record->after_amount??''}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
         </div>
         @endif
     </div>
 </div>
-    <!-- end: page -->
+
+<div class="modal" id="DepoModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" method="post" action="{{ route('user.deposit') }}" onsubmit="return onSubmitForm()">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b style="color:green">Deposit</b></h5>
+                    <a class="btn-close" onclick="closeDepoModal()" aria-label="Close"></a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" name="user_id" value="{{$user->id??''}}" hidden>
+                    <div class="mb-3">
+                        <label class="col-form-label"><b style="color:green">Deposit</b> Amount</label>
+                        <input class="form-control" type="number" min="0" step="0.01" name="deposit_amount" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <a class="btn btn-default" onclick="closeDepoModal()">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 </section>
+
+<script>
+    function openDepoModal(){
+        $("#DepoModal").show();
+    }
+
+    function closeDepoModal(){
+        $("#DepoModal").hide();
+    }
+</script>
 @endsection

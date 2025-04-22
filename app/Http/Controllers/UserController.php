@@ -9,6 +9,8 @@ use App\Models\User;
 use App\Models\Bank;
 use App\Models\UserBank;
 use App\Models\UserAddress;
+use App\Models\UserScore;
+use App\Models\MoneyRecord;
 use Bouncer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -111,6 +113,59 @@ class UserController extends Controller
         $user_address->update($request->all());
 
         return redirect()->route('user.edit',$user_address->user_id)->withSuccess('Data saved');
+    }
+
+    public function create_score(User $user)
+    {
+        return view('user.create_score')->with('user',$user);
+    }
+
+    public function store_score(Request $request, User $user)
+    {
+        if($request->score >=80){
+            $value = "Good";
+        }else if($request->score >=60){
+            $value = "Fair";
+        }else if($request->score >=40){
+            $value = "Poor";
+        }else if($request->score >=20){
+            $value = "Very Poor";
+        }else{
+            $value = "Extremely Poor";
+        }
+        $request->merge(['user_id'=>$user->id,'value'=>$value]);
+        // dd($request->all());
+        $user_score = UserScore::create($request->all());
+
+        $user->update([
+            'credit_score'=>$request->score,
+            'account_health'=>$value,
+        ]);
+
+        return redirect()->route('user.edit',$user)->withSuccess('Data saved');
+    }
+
+    public function deposit(Request $request)
+    {
+        // dd($request->all());
+        $user= User::find($request->user_id);
+        if(isset($user)){
+            if($request->deposit_amount>0){
+                $original_amount = $user->available_fund;
+                $amount = $request->deposit_amount;
+                $after_amount = round($original_amount+$amount,2);
+                $money = MoneyRecord::create([
+                    'user_id'=>$user->id,
+                    'type'=>"Deposit",
+                    'before_amount'=>$original_amount,
+                    'amount'=>$amount,
+                    'after_amount'=>$after_amount,
+                ]);
+                $user->update(['available_fund'=>$after_amount]);
+            }
+        }
+
+        return redirect()->route('user.edit',$user)->withSuccess('Data saved');
     }
 
 }
