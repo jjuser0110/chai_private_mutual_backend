@@ -35,8 +35,6 @@ class User extends Authenticatable
         'invitation_code',
         'medal',
         'available_fund',
-        'total_money',
-        'unavailable_fund',
         'income',
         'credit_score',
         'shop_point',
@@ -91,5 +89,25 @@ class User extends Authenticatable
     public function money_records()
     {
         return $this->hasMany('App\Models\MoneyRecord')->orderBy('created_at','DESC');
+    }
+
+    public function bookings()
+    {
+        return $this->hasMany('App\Models\Booking')->orderBy('created_at','DESC');
+    }
+
+    public function join_records()
+    {
+        return $this->hasMany('App\Models\JoinRecord')->orderBy('created_at','DESC');
+    }
+
+    public function getUnavailableFundAttribute()
+    {
+        return round($this->bookings()->sum('total_payment')+$this->join_records()->sum('investment_amount'),2);
+    }
+
+    public function getTotalMoneyAttribute()
+    {
+        return round($this->unavailable_fund+$this->available_fund,2);
     }
 }

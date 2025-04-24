@@ -18,7 +18,18 @@ $currentRoute = request()->route()->getName();
                         <a class="nav-link" href="{{route('home')}}">
                             Dashboard
                         </a>
-                    </li><li class="dropdown <?php echo $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">
+                    </li>
+                    <li class="{{ $currentRoute == 'booking.index' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('booking.index')}}">
+                            Booking Record
+                        </a>
+                    </li>
+                    <li class="{{ $currentRoute == 'join.index' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('join.index')}}">
+                            Join Record
+                        </a>
+                    </li>
+                    <li class="dropdown <?php echo $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">Product</a>
                         <ul class="dropdown-menu">
                             <li>

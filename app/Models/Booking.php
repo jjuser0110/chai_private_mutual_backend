@@ -18,7 +18,9 @@ class Booking extends Model
         'booking_amount',
         'number',
         'final_payment',
+        'total_payment',
         'countdown',
+        'total_payment',
     ];
 
     public function user()

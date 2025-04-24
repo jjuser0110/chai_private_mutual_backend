@@ -68,10 +68,6 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="col-form-label">Unavailable Fund</label>
-                                    <input class="form-control" type="number" min="0" step="0.01" name="unavailable_fund" placeholder="unavailable_fund.." value="{{$user->unavailable_fund??''}}" >
-                                </div>  
-                                <div class="mb-3">
                                     <label class="col-form-label">Income</label>
                                     <input class="form-control" type="number" min="0" step="0.01" name="income" placeholder="income.." value="{{$user->income??''}}" >
                                 </div>
