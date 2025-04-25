@@ -27,6 +27,7 @@ class Product extends Model
         'display',
         'earning_yield_unit',
         'project_deadline_unit',
+        'product_type',
     ];
 
     public function category()
