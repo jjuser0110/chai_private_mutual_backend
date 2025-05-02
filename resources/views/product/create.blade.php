@@ -21,6 +21,13 @@
                             <input class="form-control" type="text" name="product_name" placeholder="product name" value="{{$product->product_name??''}}">
                         </div>
                         <div class="mb-3">
+                            <label class="col-form-label">Product Type</label>
+                            <select class="form-control" name="product_type">
+                                <option value='normal' <?php echo isset($product)&&$product->product_type == 'Normal'?'selected':'' ?>>Normal</option>
+                                <option value='booking' <?php echo isset($product)&&$product->product_type == 'Booking'?'selected':'' ?>>Booking</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="col-form-label">Category <span style="color:red">*</span></label>
                             <select class="form-control" name="product_category_id">
                                 @foreach($category as $cat)
@@ -65,6 +72,15 @@
                             <input class="form-control" type="number" min="0" step="0.01" name="investment_amount_to" placeholder="investment amount to" value="{{$product->investment_amount_to??''}}">
                         </div>
                         <div class="mb-3">
+                            <label class="col-form-label">Description <span style="color:red">*</span></label>
+                            <select class="form-control" name="description">
+                                <option value='Ordinary' <?php echo isset($product)&&$product->description == 'Ordinary'?'selected':'' ?>>Ordinary</option>
+                                <option value='Silver' <?php echo isset($product)&&$product->description == 'Silver'?'selected':'' ?>>Silver</option>
+                                <option value='Gold' <?php echo isset($product)&&$product->description == 'Gold'?'selected':'' ?>>Gold</option>
+                                <option value='Diamond' <?php echo isset($product)&&$product->description == 'Diamond'?'selected':'' ?>>Diamond</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label class="col-form-label">User Level <span style="color:red">*</span></label>
                             <select class="form-control" name="user_level">
                                 <option value='Ordinary' <?php echo isset($product)&&$product->user_level == 'Ordinary'?'selected':'' ?>>Ordinary</option>
@@ -73,7 +89,7 @@
                                 <option value='Diamond' <?php echo isset($product)&&$product->user_level == 'Diamond'?'selected':'' ?>>Diamond</option>
                             </select>
                         </div>
-                        @if(isset($shop_item))
+                        @if(isset($product))
                         <div class="mb-3">
                             <label class="col-form-label">Status <span style="color:red">*</span></label>
                             <select class="form-control" name="is_active">
@@ -99,6 +115,7 @@
                             <label class="col-form-label">Image</label>
                             <input class="form-control" type="file" name="file_attachment" accept="image/*">
                         </div>
+                        @if(isset($product))
                         <div class="row">
                             @foreach($product->file_attachments as $banner)
                             <div class="col-lg-4">
@@ -107,6 +124,7 @@
                             </div>
                             @endforeach
                         </div>
+                        @endif
                     </div>
                     <div class="card-footer text-end">
                         <a href="{{route('product.index')}}" class="btn btn-secondary">Back</a>
