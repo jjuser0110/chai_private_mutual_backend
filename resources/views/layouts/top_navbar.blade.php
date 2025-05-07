@@ -1,5 +1,9 @@
 @php
+use App\Models\User;
+
 $currentRoute = request()->route()->getName();
+$user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)->get();
+
 @endphp
 <div class="logo-container">
     <a href="/" class="logo">
@@ -27,6 +31,11 @@ $currentRoute = request()->route()->getName();
                     <li class="{{ $currentRoute == 'join.index' ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('join.index')}}">
                             Join Record
+                        </a>
+                    </li>
+                    <li class="{{ $currentRoute == 'pending_verify.index' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('pending_verify.index')}}">
+                            Pending Verify <span style="color:red">({{$user->count()??0}})</span>
                         </a>
                     </li>
                     <li class="dropdown <?php echo $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">

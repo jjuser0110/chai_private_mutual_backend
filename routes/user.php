@@ -8,6 +8,7 @@ Route::prefix('/user')->as('user.')->middleware(['auth'])->group(function() {
     Route::get('/create', 'UserController@create')->name('create');
     Route::post('/store', 'UserController@store')->name('store');
     Route::get('/edit/{user}', 'UserController@edit')->name('edit');
+    Route::get('/verify/{user}', 'UserController@verify')->name('verify');
     Route::post('/update/{user}', 'UserController@update')->name('update');
     Route::get('/destroy/{user}', 'UserController@destroy')->name('destroy');
     Route::get('/create_bank/{user}', 'UserController@create_bank')->name('create_bank');
@@ -21,4 +22,6 @@ Route::prefix('/user')->as('user.')->middleware(['auth'])->group(function() {
     Route::get('/create_score/{user}', 'UserController@create_score')->name('create_score');
     Route::post('/store_score/{user}', 'UserController@store_score')->name('store_score');
     Route::post('/deposit', 'UserController@deposit')->name('deposit');
+    Route::get('/verify_user/{user}', 'UserController@verify_user')->name('verify_user');
+    Route::get('/reject_user/{user}', 'UserController@reject_user')->name('reject_user');
 });

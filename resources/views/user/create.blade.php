@@ -25,9 +25,10 @@
                         <h6>User Information</h6>
                         @if(isset($user))
                         <p>
+                            Total Money : {{$user->total_money??''}}<br>
                             Available Fund : {{$user->available_fund??''}}<br>
-                            Invitation Code : {{$user->invitation_code??''}}<br>
-                            Upline : {{$user->upline_detail->username??''}}
+                            Unavailable Fund : {{$user->unavailable_fund??''}}<br>
+                            Income : {{$user->income??''}}<br>
                         </p>
                         @endif
                         <div class="row">
@@ -37,24 +38,20 @@
                                     <input class="form-control" type="text" name="name" placeholder="name..." value="{{$user->name??''}}" required>
                                 </div>
                                 <div class="mb-3">
+                                    <label class="col-form-label">Username <span style="color:red">*</span></label>
+                                    <input class="form-control" type="text" name="username" placeholder="username.." value="{{$user->username??''}}" required>
+                                </div>
+                                <div class="mb-3">
                                     <label class="col-form-label">Email</label>
                                     <input class="form-control" type="email" name="email" placeholder="email.." value="{{$user->email??''}}">
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-form-label">ID Card <span style="color:red">*</span></label>
-                                    <input class="form-control" type="text" name="id_card" placeholder="id_card.." value="{{$user->id_card??''}}" required>
+                                    <input class="form-control" type="text" name="nric_no" placeholder="nric no.." value="{{$user->nric_no??''}}" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="col-form-label">Contact No <span style="color:red">*</span></label>
                                     <input class="form-control" type="text" name="contact_no" placeholder="contact no.." value="{{$user->contact_no??''}}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Username <span style="color:red">*</span></label>
-                                    <input class="form-control" type="text" name="username" placeholder="username.." value="{{$user->username??''}}" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="col-form-label">Password</label>
-                                    <input class="form-control" type="text" name="password" placeholder="password.." @if(!isset($user)) required @endif>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-3">
@@ -68,11 +65,11 @@
                                     </select>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="col-form-label">Income</label>
-                                    <input class="form-control" type="number" min="0" step="0.01" name="income" placeholder="income.." value="{{$user->income??''}}" >
+                                    <label class="col-form-label">Password</label>
+                                    <input class="form-control" type="text" name="password" placeholder="password.." @if(!isset($user)) required @endif>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="col-form-label">Fund Password (6 digit)</label>
+                                    <label class="col-form-label">Fund Password (8 digit)</label>
                                     <input class="form-control" type="text" name="fund_password" placeholder="fund_password.." value="{{$user->fund_password??''}}" >
                                 </div>
                                 @if(isset($user))

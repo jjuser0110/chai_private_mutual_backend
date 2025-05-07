@@ -25,6 +25,14 @@ class UserController extends Controller
         return view('user.index')->with('user',$user);
     }
 
+    public function pending_verify(Request $request)
+    {
+        $user = User::where('role_id',3)->where('setup',1)->get();
+        $is_verify_page = true;
+
+        return view('user.index')->with('user',$user)->with('is_verify_page',$is_verify_page);
+    }
+
     public function create()
     {
         return view('user.create');
@@ -166,6 +174,25 @@ class UserController extends Controller
         }
 
         return redirect()->route('user.edit',$user)->withSuccess('Data saved');
+    }
+
+    public function verify(User $user)
+    {
+        return view('user.verify')->with('user',$user);
+    }
+    
+    public function verify_user(User $user)
+    {
+        $user->update(['setup'=>2]);
+
+        return redirect()->route('pending_verify.index')->withSuccess('User Verified');
+    }
+    
+    public function reject_user(User $user)
+    {
+        $user->update(['setup'=>4]);
+
+        return redirect()->route('pending_verify.index')->withSuccess('User Verified');
     }
 
 }

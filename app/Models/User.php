@@ -40,6 +40,11 @@ class User extends Authenticatable
         'shop_point',
         'account_health',
         'fund_password',
+        'nric_no',
+        'nric_front',
+        'nric_back',
+        'setup',
+        'is_verified',
     ];
 
     /**
@@ -109,5 +114,20 @@ class User extends Authenticatable
     public function getTotalMoneyAttribute()
     {
         return round($this->unavailable_fund+$this->available_fund,2);
+    }
+
+    public function getVerificationAttribute()
+    {
+        if($this->setup == 0){
+            $verification = "Unverified";
+        }else if($this->setup == 1){
+            $verification = "Pending Verification";
+        }else if($this->setup == 2){
+            $verification = "Verified";
+        }else{
+            $verification = "Verification Failed";
+        };
+
+        return $verification;
     }
 }

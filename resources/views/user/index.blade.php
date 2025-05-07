@@ -13,16 +13,24 @@
         <div class="col-lg-12 mb-3">
             <section class="card">
                 <div class="card-header" style="text-align: right;">
+                    @if(!isset($is_verify_page))
                     <a class="btn btn-xs btn-square btn-primary" href="{{route('user.create')}}">Create</a>
+                    @endif
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-striped mb-0" id="datatable-default">
                         <thead>
                             <tr>
-                                <th>User Name</th>
-                                <th>User Username</th>
-                                <th>User Email</th>
-                                <th>User Contact No</th>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>IC</th>
+                                <th>Email</th>
+                                <th>Contact No</th>
+                                <th>Total</th>
+                                <th>Avaiable Fund</th>
+                                <th>Unavailable Fund</th>
+                                <th>Income</th>
+                                <th>Verification</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -32,10 +40,17 @@
                                 <tr>
                                     <td>{{$s->name??''}}</td>
                                     <td>{{$s->username??''}}</td>
+                                    <td>{{$s->nric_no??''}}</td>
                                     <td>{{$s->email??''}}</td>
                                     <td>{{$s->contact_no??''}}</td>
+                                    <td>{{$s->total_money??''}}</td>
+                                    <td>{{$s->available_fund??''}}</td>
+                                    <td>{{$s->unavailable_fund??''}}</td>
+                                    <td>{{$s->income??''}}</td>
+                                    <td>{{$s->verification??''}}</td>
                                     <td><?php echo $s->is_active == 1?"<span style='color:#1bb500'>Active</span>":"<span style='color:red'>Inactive</span>" ?></td>
                                     <td>
+                                        <a href="{{ route('user.verify',$s) }}" title="Verify">Verify</a>
                                         <a href="{{ route('user.edit',$s) }}" title="Edit"><i class="bx bx-edit-alt"></i></a>
                                         <a onclick="if(confirm('Are you sure you want to delete?')){window.location.href='{{ route('user.destroy',$s) }}'}" title = "Delete" style="cursor:pointer"><i class="bx bx-trash"></i></a>
                                     </td>
