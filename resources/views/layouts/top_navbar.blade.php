@@ -69,9 +69,14 @@ $currentRoute = request()->route()->getName();
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown <?php echo $currentRoute == 'user.index' ? 'active' : '' ?>">
+                    <li class="dropdown <?php echo $currentRoute == 'user.index' || $currentRoute == 'invitation_code.index' ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">User</a>
                         <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link" href="{{route('invitation_code.index')}}">
+                                    Invitation Code
+                                </a>
+                            </li>
                             <li>
                                 <a class="nav-link" href="{{route('user.index')}}">
                                     User List

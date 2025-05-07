@@ -32,7 +32,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->merge(['role_id'=>3,'password'=>Hash::make($request->password),'invitation_code'=>$this->getReferral()]);
+        $request->merge(['role_id'=>3,'password'=>Hash::make($request->password)]);
         // dd($request->all());
         $user = User::create($request->all());
 

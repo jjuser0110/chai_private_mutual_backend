@@ -7,12 +7,13 @@ use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\InvitationCode;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
     
-    public function getReferral()
+    public function getCode()
     {
         $length = 8;
         $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -23,10 +24,10 @@ class Controller extends BaseController
         }
 
         // Check if referral code already exists
-        $user = User::where('invitation_code', $random)->first();
+        $check_code = InvitationCode::where('code', $random)->first();
 
-        if ($user) {
-            return $this->getReferral(); // Recursive call with $this-> if inside a class
+        if ($check_code) {
+            return $this->getCode(); // Recursive call with $this-> if inside a class
         } else {
             return $random;
         }
