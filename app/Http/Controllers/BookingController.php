@@ -12,6 +12,7 @@ use Bouncer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class BookingController extends Controller
 {
@@ -57,7 +58,7 @@ class BookingController extends Controller
     {
         // dd($booking);
         $booking->update(['status'=>'Cancelled']);
-        $amount = $booking->booking_amount;
+        $amount = $booking->total_payment;
         $user = User::find($booking->user_id);
         $original_amount = $user->available_fund;
         $after_amount = round($original_amount+$amount,2);
@@ -80,11 +81,9 @@ class BookingController extends Controller
         $no_of_time =$request->no_of_time;
         $booking_amount = $booking->booking_amount;
         $final_payment = round($booking_amount*$no_of_time,2);
-        $total_payment= round($booking_amount+$final_payment,2);
         $booking->update([
             'number'=>$no_of_time,
             'final_payment'=>$final_payment,
-            'total_payment'=>$total_payment,
             'status'=>'Pending Final Payment',
         ]);
 
@@ -93,25 +92,37 @@ class BookingController extends Controller
 
     public function status(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         $booking = Booking::find($request->booking_id_2);
         $dividend_amount = $request->dividend_amount;
         $booking->update([
             'dividend_amount'=>$dividend_amount,
             'status'=>'Finished',
         ]);
-        $amount = round($dividend_amount+$join->investment_amount,2);
-        $user = User::find($join->user_id);
+        $amount = round($dividend_amount+$booking->total_payment,2);
+        $user = User::find($booking->user_id);
         $original_amount = $user->available_fund;
         $after_amount = round($original_amount+$amount,2);
         $money = MoneyRecord::create([
             'user_id'=>$user->id,
-            'type'=>"Join Earn",
+            'type'=>"Booking Earn",
             'before_amount'=>$original_amount,
             'amount'=>$amount,
             'after_amount'=>$after_amount,
         ]);
         $user->update(['available_fund'=>$after_amount,'income'=>round($user->income+$dividend_amount,2)]);
+
+        return redirect()->route('booking.pending')->withSuccess('Data saved');
+    }
+
+    public function add_countdown(Request $request)
+    {
+        // dd($request->all());
+        $booking = Booking::find($request->booking_id_3);
+        $countdown_datetime = Carbon::parse($request->countdown_datetime);
+        $booking->update([
+            'countdown'=>$countdown_datetime,
+        ]);
 
         return redirect()->route('booking.pending')->withSuccess('Data saved');
     }

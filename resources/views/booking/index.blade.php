@@ -25,7 +25,9 @@
                                 <th>Booking Amount</th>
                                 <th>Number</th>
                                 <th>Final Payment</th>
-                                <th>Count Down</th>
+                                <th>Count Down To</th>
+                                <th>Total Payment</th>
+                                <th>Dividend Payment</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -40,17 +42,22 @@
                                     <td>{{$s->number??''}}</td>
                                     <td>{{$s->final_payment??''}}</td>
                                     <td>{{$s->countdown??''}}</td>
+                                    <td>{{$s->total_payment??''}}</td>
+                                    <td>{{$s->dividend_amount??''}}</td>
                                     <td>{{$s->status??''}}</td>
                                     <td>
                                         @if($s->status == "Running")
                                         <a  title="Edit" onclick="openExtraModal({{$s}})" style="cursor:pointer" class="btn btn-primary btn-sm">Extra</a>
-                                        <a onclick="if(confirm('Are you sure you want to cancel and refund?')){window.location.href='{{ route('booking.destroy',$s) }}'}" title = "Delete" style="cursor:pointer" class="btn btn-warning btn-sm">CANCEL</a>
                                         @endif
                                         @if($s->status == "Pending Final Payment")
-                                        <a  title="Edit" onclick="openExtraModal({{$s}})" style="cursor:pointer" class="btn btn-primary btn-sm">Add Time</a>
+                                        <a  title="Edit" onclick="openAddTimeModal({{$s}})" style="cursor:pointer" class="btn btn-primary btn-sm">Add Time</a>
                                         @endif
                                         @if($s->status == "Running" || $s->status == "Complete Final Payment")
                                         <a  title="Edit" onclick="opendividendMOdal({{$s}})" style="cursor:pointer" class="btn btn-primary btn-sm">Divided</a>
+                                        @endif
+
+                                        @if($s->status != "Cancelled" && $s->status != "Finished")
+                                        <a onclick="if(confirm('Are you sure you want to cancel and refund?')){window.location.href='{{ route('booking.destroy',$s) }}'}" title = "Delete" style="cursor:pointer" class="btn btn-warning btn-sm">CANCEL</a>
                                         @endif
                                     </td>
                                 </tr>
@@ -115,6 +122,31 @@
     </div>
 </div>
 
+<div class="modal" id="addTimeModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" method="post" action="{{ route('booking.add_countdown') }}" onsubmit="return onSubmitForm()">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b style="color:green">Change Time of Countdown</b></h5>
+                    <a class="btn-close" onclick="closeAddTimeModal()" aria-label="Close"></a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" name="booking_id_3" id="booking_id_3" hidden>
+                    <div class="mb-3">
+                        <label class="col-form-label"><b style="color:green">Count Down</b> To</label>
+                        <input class="form-control" type="datetime-local"  name="countdown_datetime" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <a class="btn btn-default" onclick="closeAddTimeModal()">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
     function openExtraModal(data){
         console.log(data);
@@ -134,6 +166,16 @@
 
     function closedividendMOdal(){
         $("#dividendMOdal").hide();
+    }
+
+    function openAddTimeModal(data){
+        console.log(data);
+        $("#addTimeModal").show();
+        $("#booking_id_3").val(data.id);
+    }
+
+    function closeAddTimeModal(){
+        $("#addTimeModal").hide();
     }
 </script>
 @endsection
