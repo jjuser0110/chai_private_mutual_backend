@@ -50,7 +50,9 @@
                                     <td>{{$s->verification??''}}</td>
                                     <td><?php echo $s->is_active == 1?"<span style='color:#1bb500'>Active</span>":"<span style='color:red'>Inactive</span>" ?></td>
                                     <td>
+                                        @if($s->setup == 1)
                                         <a href="{{ route('user.verify',$s) }}" title="Verify">Verify</a>
+                                        @endif
                                         <a href="{{ route('user.edit',$s) }}" title="Edit"><i class="bx bx-edit-alt"></i></a>
                                         <a onclick="if(confirm('Are you sure you want to delete?')){window.location.href='{{ route('user.destroy',$s) }}'}" title = "Delete" style="cursor:pointer"><i class="bx bx-trash"></i></a>
                                     </td>

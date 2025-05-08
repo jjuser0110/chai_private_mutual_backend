@@ -38,8 +38,10 @@
                                     <td>{{$s->dividend_amount??''}}</td>
                                     <td>{{$s->status??''}}</td>
                                     <td>
-                                        <!-- <a href="{{ route('join.edit',$s) }}" title="Edit"><i class="bx bx-edit-alt"></i></a>
-                                        <a onclick="if(confirm('Are you sure you want to delete?')){window.location.href='{{ route('join.destroy',$s) }}'}" title = "Delete" style="cursor:pointer"><i class="bx bx-trash"></i></a> -->
+                                        @if($s->status == "Running")
+                                        <a  title="Edit" onclick="opendividendMOdal({{$s}})" style="cursor:pointer" class="btn btn-primary btn-sm">Divided</a>
+                                        <a onclick="if(confirm('Are you sure you want to cancel and refund?')){window.location.href='{{ route('join.destroy',$s) }}'}" title = "Delete" style="cursor:pointer" class="btn btn-warning btn-sm">CANCEL</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
@@ -51,6 +53,44 @@
     </div>
     <!-- end: page -->
 </section>
+
+
+<div class="modal" id="dividendMOdal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" method="post" action="{{ route('join.status') }}" onsubmit="return onSubmitForm()">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b style="color:green">Dividend</b></h5>
+                    <a class="btn-close" onclick="closedividendMOdal()" aria-label="Close"></a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" name="join_id" id="join_id" hidden>
+                    <div class="mb-3">
+                        <label class="col-form-label"><b style="color:green">Dividend</b> Amount</label>
+                        <input class="form-control" type="number" min="0" step="0.01" name="dividend_amount" placeholder="0.00" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <a class="btn btn-default" onclick="closedividendMOdal()">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function opendividendMOdal(data){
+        console.log(data);
+        $("#dividendMOdal").show();
+        $("#join_id").val(data.id);
+    }
+
+    function closedividendMOdal(){
+        $("#dividendMOdal").hide();
+    }
+</script>
 @endsection
 
 @section('page-js')

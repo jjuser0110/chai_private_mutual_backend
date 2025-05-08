@@ -22,6 +22,13 @@ class WithdrawController extends Controller
         return view('withdraw.index')->with('withdraw',$withdraw);
     }
 
+    public function pending(Request $request)
+    {
+        $withdraw = Withdraw::where('status','Pending')->get();
+
+        return view('withdraw.index')->with('withdraw',$withdraw);
+    }
+
     public function edit(Withdraw $withdraw)
     {
         return view('withdraw.create')->with('withdraw',$withdraw);

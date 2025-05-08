@@ -1,8 +1,14 @@
 @php
 use App\Models\User;
+use App\Models\Booking;
+use App\Models\JoinRecord;
+use App\Models\Withdraw;
 
 $currentRoute = request()->route()->getName();
 $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)->get();
+$withdraw = Withdraw::where('status','Pending')->get();
+$booking = Booking::whereNotIn('status',['Finished','Cancelled'])->get();
+$join = JoinRecord::whereNotIn('status',['Finished','Cancelled'])->get();
 
 @endphp
 <div class="logo-container">
@@ -23,14 +29,14 @@ $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)-
                             Dashboard
                         </a>
                     </li>
-                    <li class="{{ $currentRoute == 'booking.index' ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('booking.index')}}">
-                            Booking Record
+                    <li class="{{ $currentRoute == 'booking.pending' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('booking.pending')}}">
+                            Pending Booking <span style="color:red">({{$booking->count()??0}})</span>
                         </a>
                     </li>
-                    <li class="{{ $currentRoute == 'join.index' ? 'active' : ''}}">
-                        <a class="nav-link" href="{{route('join.index')}}">
-                            Join Record
+                    <li class="{{ $currentRoute == 'join.pending' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('join.pending')}}">
+                            Pending Join <span style="color:red">({{$join->count()??0}})</span>
                         </a>
                     </li>
                     <li class="{{ $currentRoute == 'pending_verify.index' ? 'active' : ''}}">
@@ -38,7 +44,12 @@ $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)-
                             Pending Verify <span style="color:red">({{$user->count()??0}})</span>
                         </a>
                     </li>
-                    <li class="dropdown <?php echo $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">
+                    <li class="{{ $currentRoute == 'withdraw.pending' ? 'active' : ''}}">
+                        <a class="nav-link" href="{{route('withdraw.pending')}}">
+                            Pending Withdraw <span style="color:red">({{$withdraw->count()??0}})</span>
+                        </a>
+                    </li>
+                    <li class="dropdown <?php echo $currentRoute == 'join.index' ||$currentRoute == 'booking.index'|| $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">Product</a>
                         <ul class="dropdown-menu">
                             <li>
@@ -54,6 +65,16 @@ $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)-
                             <li>
                                 <a class="nav-link" href="{{route('product.index')}}">
                                     Product
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('join.index')}}">
+                                    Join History
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{route('booking.index')}}">
+                                    Booking History
                                 </a>
                             </li>
                         </ul>
@@ -93,7 +114,7 @@ $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)-
                             </li>
                             <li>
                                 <a class="nav-link" href="{{route('withdraw.index')}}">
-                                    Withdraw
+                                    Withdraw History
                                 </a>
                             </li>
                         </ul>

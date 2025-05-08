@@ -23,8 +23,8 @@
                         <div class="mb-3">
                             <label class="col-form-label">Product Type</label>
                             <select class="form-control" name="product_type">
-                                <option value='normal' <?php echo isset($product)&&$product->product_type == 'Normal'?'selected':'' ?>>Normal</option>
-                                <option value='booking' <?php echo isset($product)&&$product->product_type == 'Booking'?'selected':'' ?>>Booking</option>
+                                <option value='normal' <?php echo isset($product)&&$product->product_type == 'normal'?'selected':'' ?>>Normal</option>
+                                <option value='booking' <?php echo isset($product)&&$product->product_type == 'booking'?'selected':'' ?>>Booking</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -48,20 +48,12 @@
                             <input class="form-control" type="text" name="product_size" placeholder="product size" value="{{$product->product_size??''}}">
                         </div>
                         <div class="mb-3">
-                            <label class="col-form-label">Earning Yield</label>
-                            <input class="form-control" type="number" min="0" step="0.01" name="earning_yield" placeholder="earning yield" value="{{$product->earning_yield??''}}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Earning Yield Unit</label>
-                            <input class="form-control" type="text" name="earning_yield_unit" placeholder="earning yield unit" value="{{$product->earning_yield_unit??''}}">
-                        </div>
-                        <div class="mb-3">
-                            <label class="col-form-label">Deadline</label>
-                            <input class="form-control" type="number" min="0" step="1" name="project_deadline" placeholder="project deadline" value="{{$product->project_deadline??''}}">
+                            <label class="col-form-label">Earning Yield (%)</label>
+                            <input class="form-control" type="text" name="earning_yield" placeholder="earning yield" value="{{$product->earning_yield??''}}">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Deadline Unit (days/hours)</label>
-                            <input class="form-control" type="text" name="project_deadline_unit" placeholder="project deadline" value="{{$product->project_deadline_unit??''}}">
+                            <input class="form-control" type="text" name="project_deadline" placeholder="project deadline" value="{{$product->project_deadline??''}}">
                         </div>
                         <div class="mb-3">
                             <label class="col-form-label">Investment Amount</label>
