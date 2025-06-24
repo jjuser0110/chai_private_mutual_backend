@@ -96,6 +96,16 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\MoneyRecord')->orderBy('created_at','DESC');
     }
 
+    public function shop_points()
+    {
+        return $this->hasMany('App\Models\UserShopPointHistory')->orderBy('created_at','DESC');
+    }
+
+    public function withdraws()
+    {
+        return $this->hasMany('App\Models\Withdraw')->orderBy('created_at','DESC');
+    }
+
     public function bookings()
     {
         return $this->hasMany('App\Models\Booking')->orderBy('created_at','DESC');

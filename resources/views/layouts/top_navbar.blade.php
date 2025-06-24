@@ -31,22 +31,22 @@ $join = JoinRecord::whereNotIn('status',['Finished','Cancelled'])->get();
                     </li>
                     <li class="{{ $currentRoute == 'booking.pending' ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('booking.pending')}}">
-                            Pending Booking <span style="color:red">({{$booking->count()??0}})</span>
+                            Pending Booking <span style="color:red" id="booking_count">({{$booking->count()??0}})</span>
                         </a>
                     </li>
                     <li class="{{ $currentRoute == 'join.pending' ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('join.pending')}}">
-                            Pending Join <span style="color:red">({{$join->count()??0}})</span>
+                            Pending Join <span style="color:red" id="join_count">({{$join->count()??0}})</span>
                         </a>
                     </li>
                     <li class="{{ $currentRoute == 'pending_verify.index' ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('pending_verify.index')}}">
-                            Pending Verify <span style="color:red">({{$user->count()??0}})</span>
+                            Pending Verify <span style="color:red" id="user_count">({{$user->count()??0}})</span>
                         </a>
                     </li>
                     <li class="{{ $currentRoute == 'withdraw.pending' ? 'active' : ''}}">
                         <a class="nav-link" href="{{route('withdraw.pending')}}">
-                            Pending Withdraw <span style="color:red">({{$withdraw->count()??0}})</span>
+                            Pending Withdraw <span style="color:red" id="withdraw_count">({{$withdraw->count()??0}})</span>
                         </a>
                     </li>
                     <li class="dropdown <?php echo $currentRoute == 'join.index' ||$currentRoute == 'booking.index'|| $currentRoute == 'product_banner'|| $currentRoute == 'category.index' ||$currentRoute == 'product.index'  ? 'active' : '' ?>">

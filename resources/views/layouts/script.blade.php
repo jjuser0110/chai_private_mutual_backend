@@ -62,4 +62,55 @@
         var overlay = document.getElementById('overlay');
         overlay.style.display = 'none';
     }
+
+    $( document ).ready(function() {
+        loadPendingTransaction();
+    });
+
+    window.setInterval(function()
+    {
+        loadPendingTransaction();
+    }, 5000);
+
+    function loadPendingTransaction(){
+        $.ajax({
+            url: "{{ route('load_pending_transactions') }}",
+            method: 'POST',
+            headers: { 'X-CSRF-TOKEN': '{{ csrf_token() }}'},
+            success: function(response) {
+                console.log(response);
+                if(response.join > 0){
+                    $('#join_count').html("("+response.join+")").removeClass('hide');
+                }
+                else{
+                    $('#join_count').addClass('hide');
+                }
+                if(response.withdraw > 0){
+                    $('#withdraw_count').html("("+response.withdraw+")").removeClass('hide');
+                }
+                else{
+                    $('#withdraw_count').addClass('hide');
+                }
+                if(response.user > 0){
+                    $('#user_count').html("("+response.user+")").removeClass('hide');
+                }
+                else{
+                    $('#user_count').addClass('hide');
+                }
+                if(response.booking > 0){
+                    $('#booking_count').html("("+response.booking+")").removeClass('hide');
+                }
+                else{
+                    $('#booking_count').addClass('hide');
+                }
+
+                if((response.join + response.withdraw + response.user + response.booking) > 0){
+                    $('audio#myAudio')[0].play();
+                }
+            },
+            error: function(){
+                console.log('failed to load pending transaction');
+            }
+        }) 
+    }
 </script>

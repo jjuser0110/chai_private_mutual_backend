@@ -24,4 +24,5 @@ Route::prefix('/user')->as('user.')->middleware(['auth'])->group(function() {
     Route::post('/deposit', 'UserController@deposit')->name('deposit');
     Route::get('/verify_user/{user}', 'UserController@verify_user')->name('verify_user');
     Route::get('/reject_user/{user}', 'UserController@reject_user')->name('reject_user');
+    Route::post('/point', 'UserController@point')->name('point');
 });

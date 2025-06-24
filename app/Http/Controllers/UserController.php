@@ -10,6 +10,7 @@ use App\Models\Bank;
 use App\Models\UserBank;
 use App\Models\UserAddress;
 use App\Models\UserScore;
+use App\Models\UserShopPointHistory;
 use App\Models\MoneyRecord;
 use Bouncer;
 use Illuminate\Support\Facades\Validator;
@@ -193,6 +194,32 @@ class UserController extends Controller
         $user->update(['setup'=>4]);
 
         return redirect()->route('pending_verify.index')->withSuccess('User Verified');
+    }
+
+    public function point(Request $request)
+    {
+        // dd($request->all());
+        $user= User::find($request->user_id);
+        if(isset($user)){
+            $shop_point = $request->shop_point;
+            $original_amount = $user->shop_point;
+            $after_amount = round($original_amount+$shop_point,2);
+            if($shop_point > 0){
+                $type = "Point Added";
+            }else{
+                $type = "Point Deducted";
+            }
+            $money = UserShopPointHistory::create([
+                'user_id'=>$user->id,
+                'type'=>$type,
+                'prev_amount'=>$original_amount,
+                'amount'=>abs($shop_point),
+                'final_amount'=>$after_amount,
+            ]);
+            $user->update(['shop_point'=>$after_amount]);
+        }
+
+        return redirect()->route('user.edit',$user)->withSuccess('Data saved');
     }
 
 }

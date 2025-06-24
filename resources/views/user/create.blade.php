@@ -13,6 +13,7 @@
     <div class="row">
         <div class="col-lg-12">
             <a class="btn btn-secondary" style="float:right" onclick="openDepoModal()">Deposit</a>
+            <a class="btn btn-primary" style="float:right;margin-right:10px" onclick="openPointModal()">Shop Point</a>
         </div>
     </div>
     @endif
@@ -29,6 +30,7 @@
                             Available Fund : {{$user->available_fund??''}}<br>
                             Unavailable Fund : {{$user->unavailable_fund??''}}<br>
                             Income : {{$user->income??''}}<br>
+                            Shop Point : {{$user->shop_point??''}}<br>
                         </p>
                         @endif
                         <div class="row">
@@ -100,7 +102,7 @@
                     <a class="btn btn-xs btn-square btn-primary" style="float: right;" href="{{route('user.create_bank',$user)}}">Create</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                    <table class="table table-bordered table-striped mb-0" id="table-nopage">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -134,7 +136,7 @@
                     <a class="btn btn-xs btn-square btn-primary" style="float: right;" href="{{route('user.create_address',$user)}}">Create</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                    <table class="table table-bordered table-striped mb-0" id="table-nopage">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -168,7 +170,7 @@
                     <a class="btn btn-xs btn-square btn-primary" style="float: right;" href="{{route('user.create_score',$user)}}">Create</a>
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+                    <table class="table table-bordered table-striped mb-0" id="table-nopage">
                         <thead>
                             <tr>
                                 <th>Created At</th>
@@ -221,6 +223,73 @@
                     </div>
                 </section>
             </div>
+            <hr>
+            <div class="col-lg-12">
+                <section class="card">
+                    <div class="card-header" >
+                        <h4>Shop Point History</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped mb-0" id="datatable-shoppoint">
+                            <thead>
+                                <tr>
+                                    <th>Created At</th>
+                                    <th>Type</th>
+                                    <th>Before</th>
+                                    <th>Amount</th>
+                                    <th>After</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($user->shop_points as $rec)
+                                    <tr>
+                                        <td>{{$rec->created_at??''}}</td>
+                                        <td>{{$rec->type??''}}</td>
+                                        <td>{{$rec->prev_amount??''}}</td>
+                                        <td>{{$rec->amount??''}}</td>
+                                        <td>{{$rec->final_amount??''}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div><hr>
+            <div class="col-lg-12">
+                <section class="card">
+                    <div class="card-header" >
+                        <h4>withdraw Record</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped mb-0" id="datatable-withdraw">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Amount</th>
+                                    <th>Bank</th>
+                                    <th>Account</th>
+                                    <th>Name</th>
+                                    <th>Created At</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($user->withdraws as $s)
+                                    <tr>
+                                        <td>{{$s->user->username??''}}</td>
+                                        <td>{{$s->amount??''}}</td>
+                                        <td>{{$s->user_bank->bank->bank_name??''}}</td>
+                                        <td>{{$s->user_bank->account_no??''}}</td>
+                                        <td>{{$s->user_bank->full_name??''}}</td>
+                                        <td>{{$s->created_at??''}}</td>
+                                        <td>{{$s->status??''}}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
         </div>
         @endif
     </div>
@@ -251,8 +320,50 @@
     </div>
 </div>
 
-</section>
+<div class="modal" id="PointModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form enctype="multipart/form-data" method="post" action="{{ route('user.point') }}" onsubmit="return onSubmitForm()">
+                <div class="modal-header">
+                    <h5 class="modal-title"><b style="color:green">Shop Point</b></h5>
+                    <a class="btn-close" onclick="closePointModal()" aria-label="Close"></a>
+                </div>
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" name="user_id" value="{{$user->id??''}}" hidden>
+                    <div class="mb-3">
+                        <label class="col-form-label"><b style="color:green">Shop Point</b></label>
+                        <input class="form-control" type="number" name="shop_point" placeholder="-/+ 5" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <a class="btn btn-default" onclick="closePointModal()">Close</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
+</section>
+@section('page-js')
+    <script src="{{ asset('porto-assets/vendor/select2/js/select2.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/media/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/pdfmake-0.1.32/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('porto-assets/vendor/datatables/extras/TableTools/pdfmake-0.1.32/vfs_fonts.js') }}"></script>
+@endsection
+@section('scripts')
+    <script src="{{ asset('porto-assets/js/examples/examples.datatables.default.js') }}"></script>
+    <script src="{{ asset('porto-assets/js/examples/examples.datatables.row.with.details.js') }}"></script>
+    <script src="{{ asset('porto-assets/js/examples/examples.datatables.tabletools.js') }}"></script>
+@endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function openDepoModal(){
         $("#DepoModal").show();
@@ -261,5 +372,27 @@
     function closeDepoModal(){
         $("#DepoModal").hide();
     }
+
+    function openPointModal(){
+        $("#PointModal").show();
+    }
+
+    function closePointModal(){
+        $("#PointModal").hide();
+    }
+    $(document).ready(function() {
+        $('#datatable-shoppoint').DataTable({
+            dom: '<"row mb-3"<"col-lg-6"l><"col-lg-6"f>>' +
+                '<"table-responsive"tr>' +
+                '<"row mt-3"<"col-lg-12"p>>'
+        });
+        
+        $('#datatable-withdraw').DataTable({
+            dom: '<"row mb-3"<"col-lg-6"l><"col-lg-6"f>>' +
+                '<"table-responsive"tr>' +
+                '<"row mt-3"<"col-lg-12"p>>'
+        });
+    });
+
 </script>
 @endsection

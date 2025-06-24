@@ -47,6 +47,9 @@
 				</div>
 			</div>
 		</div>
+		<audio id="myAudio" controls="" class="hide" allow="autoplay" preload="auto">
+			<source src="{{ asset('audio/bell.mp3') }}" type="audio/mpeg">
+		</audio>
         @include('layouts.script')
 		<script>
 			function openPassModal(){

@@ -10,6 +10,9 @@ use App\Models\PackageInvoice;
 use App\Models\BankAccount;
 use App\Models\FileAttachment;
 use App\Models\DailyReport;
+use App\Models\Booking;
+use App\Models\JoinRecord;
+use App\Models\Withdraw;
 use Bouncer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
@@ -207,5 +210,13 @@ class HomeController extends Controller
         $count = $package_invoices_count + $user_wallets_count;
 
         return response()->json(['count' => $count]);
+    }
+
+    public function load_pending_transactions(){
+        $user = User::where('role_id',3)->where('setup',1)->where('is_verified','!=',1)->count();
+        $withdraw = Withdraw::where('status','Pending')->count();
+        $booking = Booking::whereNotIn('status',['Finished','Cancelled'])->count();
+        $join = JoinRecord::whereNotIn('status',['Finished','Cancelled'])->count();
+        return response()->json(['success'=>true, 'user'=>$user, 'withdraw'=>$withdraw, 'booking'=> $booking, 'join'=> $join]);
     }
 }
