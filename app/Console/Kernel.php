@@ -16,12 +16,12 @@ class Kernel extends ConsoleKernel
     
     protected $commands = [
         //
-	   'App\Console\Commands\DoClosings',
+	   'App\Console\Commands\ChangePinCategory',
     ];
 
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('daily:cron')->daily();
+        $schedule->command('changepincategory:cron')->daily();
         // $schedule->command('inspire')->hourly();
     }
 
