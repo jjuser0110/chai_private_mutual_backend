@@ -119,9 +119,14 @@ $join = JoinRecord::whereNotIn('status',['Finished','Cancelled'])->get();
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown <?php echo $currentRoute == 'home_banner' || $currentRoute == 'staff.index' || $currentRoute == 'bank.index' ? 'active' : '' ?>">
+                    <li class="dropdown <?php echo $currentRoute == 'home_banner' || $currentRoute == 'staff.index' || $currentRoute == 'bank.index' || $currentRoute == 'article.index' ? 'active' : '' ?>">
                         <a href="#" class="nav-link dropdown-toggle">Setup</a>
                         <ul class="dropdown-menu">
+                            <li>
+                                <a class="nav-link" href="{{route('article.index')}}">
+                                    News
+                                </a>
+                            </li>
                             <li>
                                 <a class="nav-link" href="{{route('home_banner')}}">
                                     Home Banner
