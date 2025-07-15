@@ -60,10 +60,10 @@
                                 <div class="mb-3">
                                     <label class="col-form-label">User Level</label>
                                     <select class="form-control" name="medal">
-                                        <option value='Ordinary' <?php echo isset($product)&&$product->medal == 'Ordinary'?'selected':'' ?>>Ordinary</option>
-                                        <option value='Silver' <?php echo isset($product)&&$product->medal == 'Silver'?'selected':'' ?>>Silver</option>
-                                        <option value='Gold' <?php echo isset($product)&&$product->medal == 'Gold'?'selected':'' ?>>Gold</option>
-                                        <option value='Diamond' <?php echo isset($product)&&$product->medal == 'Diamond'?'selected':'' ?>>Diamond</option>
+                                        <option value='Ordinary' <?php echo isset($user)&&$user->medal == 'Ordinary'?'selected':'' ?>>Ordinary</option>
+                                        <option value='Silver' <?php echo isset($user)&&$user->medal == 'Silver'?'selected':'' ?>>Silver</option>
+                                        <option value='Gold' <?php echo isset($user)&&$user->medal == 'Gold'?'selected':'' ?>>Gold</option>
+                                        <option value='Diamond' <?php echo isset($user)&&$user->medal == 'Diamond'?'selected':'' ?>>Diamond</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
