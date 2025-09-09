@@ -64,6 +64,7 @@
                                         <option value='Silver' <?php echo isset($user)&&$user->medal == 'Silver'?'selected':'' ?>>Silver</option>
                                         <option value='Gold' <?php echo isset($user)&&$user->medal == 'Gold'?'selected':'' ?>>Gold</option>
                                         <option value='Diamond' <?php echo isset($user)&&$user->medal == 'Diamond'?'selected':'' ?>>Diamond</option>
+                                        <option value='Platinum' <?php echo isset($user)&&$user->medal == 'Platinum'?'selected':'' ?>>Platinum</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">

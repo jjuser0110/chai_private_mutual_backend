@@ -70,6 +70,7 @@
                                 <option value='Silver' <?php echo isset($product)&&$product->description == 'Silver'?'selected':'' ?>>Silver</option>
                                 <option value='Gold' <?php echo isset($product)&&$product->description == 'Gold'?'selected':'' ?>>Gold</option>
                                 <option value='Diamond' <?php echo isset($product)&&$product->description == 'Diamond'?'selected':'' ?>>Diamond</option>
+                                <option value='Platinum' <?php echo isset($product)&&$product->description == 'Platinum'?'selected':'' ?>>Platinum</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -79,6 +80,7 @@
                                 <option value='Silver' <?php echo isset($product)&&$product->user_level == 'Silver'?'selected':'' ?>>Silver</option>
                                 <option value='Gold' <?php echo isset($product)&&$product->user_level == 'Gold'?'selected':'' ?>>Gold</option>
                                 <option value='Diamond' <?php echo isset($product)&&$product->user_level == 'Diamond'?'selected':'' ?>>Diamond</option>
+                                <option value='Platinum' <?php echo isset($product)&&$product->user_level == 'Platinum'?'selected':'' ?>>Platinum</option>
                             </select>
                         </div>
                         @if(isset($product))
