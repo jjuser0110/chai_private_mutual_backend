@@ -309,7 +309,7 @@
                     <input type="text" name="user_id" value="{{$user->id??''}}" hidden>
                     <div class="mb-3">
                         <label class="col-form-label"><b style="color:green">Deposit</b> Amount</label>
-                        <input class="form-control" type="number" min="0" step="0.01" name="deposit_amount" placeholder="0.00" required>
+                        <input class="form-control" type="number" step="0.01" name="deposit_amount" placeholder="0.00" required>
                     </div>
                 </div>
                 <div class="modal-footer">

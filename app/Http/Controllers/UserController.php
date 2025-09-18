@@ -60,6 +60,9 @@ class UserController extends Controller
         }else{
             $request->request->remove('password');
         }
+        if($request->is_active == 1){
+            $request->merge(['attempt'=>0]);
+        }
         // dd($request->all());
         $user->update($request->all());
         return redirect()->route('user.index')->withSuccess('Data updated');
@@ -166,6 +169,18 @@ class UserController extends Controller
                 $money = MoneyRecord::create([
                     'user_id'=>$user->id,
                     'type'=>"Deposit",
+                    'before_amount'=>$original_amount,
+                    'amount'=>$amount,
+                    'after_amount'=>$after_amount,
+                ]);
+                $user->update(['available_fund'=>$after_amount]);
+            }else{
+                $original_amount = $user->available_fund;
+                $amount = $request->deposit_amount;
+                $after_amount = round($original_amount+$amount,2);
+                $money = MoneyRecord::create([
+                    'user_id'=>$user->id,
+                    'type'=>"Withdraw",
                     'before_amount'=>$original_amount,
                     'amount'=>$amount,
                     'after_amount'=>$after_amount,
