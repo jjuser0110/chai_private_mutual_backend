@@ -78,11 +78,11 @@ class BookingController extends Controller
     {
         // dd($request->all());
         $booking = Booking::find($request->booking_id);
-        $no_of_time =$request->no_of_time;
+        $no_of_time =$request->no_of_time-1;
         $booking_amount = $booking->booking_amount;
         $final_payment = round($booking_amount*$no_of_time,2);
         $booking->update([
-            'number'=>$no_of_time,
+            'number'=>$request->no_of_time,
             'final_payment'=>$final_payment,
             'status'=>'Pending Final Payment',
         ]);

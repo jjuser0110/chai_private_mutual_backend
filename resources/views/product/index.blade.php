@@ -21,6 +21,7 @@
                             <tr>
                                 <th>Product Name</th>
                                 <th>Category</th>
+                                <th>Type</th>
                                 <th>Price</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -31,6 +32,7 @@
                                 <tr>
                                     <td>{{$s->product_name??''}}</td>
                                     <td>{{$s->category->category_name??''}}</td>
+                                    <td>{{$s->product_type??''}}</td>
                                     <td>{{number_format($s->product_price??0,2, '.', ',')}}</td>
                                     <td><?php echo $s->is_active == 1?"<span style='color:#1bb500'>Active</span>":"<span style='color:red'>Inactive</span>" ?></td>
                                     <td>
