@@ -61,7 +61,7 @@ class UserController extends Controller
             $request->request->remove('password');
         }
         if($request->is_active == 1){
-            $request->merge(['attempt'=>0]);
+            $request->merge(['attempt'=>0,'fund_attempt'=>0]);
         }
         // dd($request->all());
         $user->update($request->all());
