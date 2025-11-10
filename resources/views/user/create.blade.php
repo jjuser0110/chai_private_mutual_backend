@@ -192,6 +192,19 @@
                 </div>
             </section>
         </div>
+        
+        <div class="row">
+            <div class="col-lg-6">
+            @isset($user->nric_front)
+                <img src="{{ env('FRONT_URL') . '/storage/nric/' . $user->id .'/'. $user->nric_front }}" style="width:300px; height:auto" />
+            @endisset
+            </div>
+            <div class="col-lg-6">
+            @isset($user->nric_back)
+                <img src="{{ env('FRONT_URL') . '/storage/nric/' . $user->id .'/'.  $user->nric_back }}" style="width:300px; height:auto" />
+            @endisset
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <section class="card">
