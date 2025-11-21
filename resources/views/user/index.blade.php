@@ -27,7 +27,8 @@
                                 <th>Email</th>
                                 <th>Contact No</th>
                                 <th>Total</th>
-                                <th>Avaiable Fund</th>
+                                <th>Available Fund</th>
+                                <th>Invalid Fund</th>
                                 <th>Unavailable Fund</th>
                                 <th>Income</th>
                                 <th>Verification</th>
@@ -44,7 +45,8 @@
                                     <td>{{$s->email??''}}</td>
                                     <td>{{$s->contact_no??''}}</td>
                                     <td>{{$s->total_money??''}}</td>
-                                    <td>{{$s->available_fund??''}}</td>
+                                    <td>{{$s->new_available_fund??''}}</td>
+                                    <td>{{$s->invalid_fund??''}}</td>
                                     <td>{{$s->unavailable_fund??''}}</td>
                                     <td>{{$s->income??''}}</td>
                                     <td>{{$s->verification??''}}</td>

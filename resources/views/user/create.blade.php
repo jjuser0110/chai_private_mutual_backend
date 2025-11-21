@@ -27,7 +27,8 @@
                         @if(isset($user))
                         <p>
                             Total Money : {{$user->total_money??''}}<br>
-                            Available Fund : {{$user->available_fund??''}}<br>
+                            Available Fund : {{$user->new_available_fund??''}}<br>
+                            Invalid Fund : {{$user->invalid_fund??''}}<br>
                             Unavailable Fund : {{$user->unavailable_fund??''}}<br>
                             Income : {{$user->income??''}}<br>
                             Shop Point : {{$user->shop_point??''}}<br>
@@ -84,6 +85,10 @@
                                     </select>
                                 </div>
                                 @endif
+                                <div class="mb-3">
+                                    <label class="col-form-label">Invalid Fund</label>
+                                    <input class="form-control" type="number" min="0" name="invalid_fund" placeholder="invalid_fund.." value="{{$user->invalid_fund??''}}" >
+                                </div>
                             </div>
                         </div>
                     </div>

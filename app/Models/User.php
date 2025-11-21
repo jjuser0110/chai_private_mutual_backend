@@ -48,7 +48,8 @@ class User extends Authenticatable
         'attempt',
         'fund_attempt',
         'reset_password_attempt',
-        'reset_fund_password_attempt'
+        'reset_fund_password_attempt',
+        'invalid_fund'
     ];
 
     /**
@@ -138,6 +139,11 @@ class User extends Authenticatable
     public function getUnavailableFundAttribute()
     {
         return round($this->pending_bookings()->sum('total_payment')+$this->pending_join_records()->sum('investment_amount')+$this->pending_withdraws()->sum('amount'),2);
+    }
+
+    public function getNewAvailableFundAttribute()
+    {
+        return round($this->available_fund-$this->invalid_fund,2);
     }
 
     public function getTotalMoneyAttribute()
